@@ -1,8 +1,7 @@
-## Sugar Hello World Example
+## Astrofractions
 
-This is an example Sugar Desktop Activity, that follows the "Hello World" tradition of being a small and simple demonstration of a complete program for a system. 
+A fraction game in the “learn to type” style.
 
-## Other Examples
+Astrofractions are flying at your ship! Power up your calcu-lasers: you'll need all the math you've got to destroy them!
 
-* https://github.com/erilyth/Hello-World-Python_Sugar
-* [Your example here?]
+Currently just the "Hello world" Sugar Desktop Activity.
