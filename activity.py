@@ -14,8 +14,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-"""HelloWorld Activity: A case study for developing an activity."""
-
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -31,11 +29,11 @@ from sugar3.activity.widgets import ShareButton
 from sugar3.activity.widgets import DescriptionItem
 
 
-class HelloWorldActivity(activity.Activity):
-    """HelloWorldActivity class as specified in activity.info"""
+class AstrofractionsActivity(activity.Activity):
+    """AstrofractionsActivity class as specified in activity.info"""
 
     def __init__(self, handle):
-        """Set up the HelloWorld activity."""
+        """Set up the Astrofractions activity."""
         activity.Activity.__init__(self, handle)
 
         # we do not have collaboration features
@@ -74,7 +72,6 @@ class HelloWorldActivity(activity.Activity):
         self.set_toolbar_box(toolbar_box)
         toolbar_box.show()
 
-        # label with the text, make the string translatable
-        label = Gtk.Label(_("Hello World!"))
+        label = Gtk.Label(_("Astrofractions!"))
         self.set_canvas(label)
         label.show()

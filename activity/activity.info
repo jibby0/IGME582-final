@@ -1,8 +1,8 @@
 [Activity]
-name = HelloWorld
-activity_version = 6
-bundle_id = org.sugarlabs.HelloWorld
-exec = sugar-activity activity.HelloWorldActivity
-icon = activity-helloworld
+name = Astrofractions
+activity_version = 1
+bundle_id = org.sugarlabs.Astrofractions
+exec = sugar-activity activity.AstrofractionsActivity
+icon = activity-astrofractions
 license = GPLv2+
-repository = https://github.com/sugarlabs/hello-world-fork.git
+repository = https://github.com/jibby0/IGME582-final.git
