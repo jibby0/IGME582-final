@@ -17,6 +17,10 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+from gi.repository import Gdk
+
+import pygame
+import sugargame.canvas
 
 from gettext import gettext as _
 
@@ -27,6 +31,9 @@ from sugar3.activity.widgets import TitleEntry
 from sugar3.activity.widgets import StopButton
 from sugar3.activity.widgets import ShareButton
 from sugar3.activity.widgets import DescriptionItem
+from sugar3.graphics.style import GRID_CELL_SIZE
+
+from astrofractions import AstrofractionsGame
 
 
 class AstrofractionsActivity(activity.Activity):
@@ -72,6 +79,19 @@ class AstrofractionsActivity(activity.Activity):
         self.set_toolbar_box(toolbar_box)
         toolbar_box.show()
 
-        label = Gtk.Label(_("Astrofractions!"))
-        self.set_canvas(label)
-        label.show()
+        self.game = AstrofractionsGame(self)
+        self.game.canvas = sugargame.canvas.PygameCanvas(
+            self, main=self.game.run, modules=[pygame.display, pygame.font])
+
+        w = Gdk.Screen.width()
+        h = Gdk.Screen.height() - 2 * GRID_CELL_SIZE
+
+        self.game.canvas.set_size_request(w, h)
+
+        self._notebook = Gtk.Notebook(show_tabs=False)
+        self._notebook.add(self.game.canvas)
+
+        self.set_canvas(self.game.canvas)
+        self.canvas.run_pygame(self.game.run)
+
+        self.show_all()
