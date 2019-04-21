@@ -35,7 +35,7 @@ from gi.repository import Gdk
 import pygame
 from pygame.locals import MOUSEBUTTONUP
 
-
+import colors
 
 
 class AstrofractionsGame:
@@ -64,6 +64,14 @@ class AstrofractionsGame:
 
     def run(self):
         self.screen = pygame.display.get_surface()
+	if not(self.screen):
+		self.screen = pygame.display.set_mode((pygame.display.Info().current_w, pygame.display.Info().current_h))
+		pygame.display.set_caption(_("Astrofractions"))
+		gameicon = pygame.image.load("activity/asteroid_example.png")
+		pygame.display.set_icon(gameicon)
+
+	asteroid = pygame.image.load("activity/asteroid_example.png")
+	aster_rect = asteroid.get_rect()
         while self.running:
 
             # Pump GTK messages.
@@ -79,13 +87,8 @@ class AstrofractionsGame:
                 elif event.type == pygame.VIDEORESIZE:
                     pygame.display.set_mode(event.size, pygame.RESIZABLE)
 
-                # Update & Draw World
-                self.screen.fill((240, 240, 240))  # #f0f0f0, light-grey
-
-                # Flip Display
-                pygame.display.flip()
-
-            # Stay < 30 FPS to help keep the rest of the platform responsive
-            self.clock.tick(30)  # Originally 50
+            self.screen.fill(colors.WHITE)
+	    self.screen.blit(asteroid, aster_rect)
+            pygame.display.update()
 
         return False

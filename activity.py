@@ -35,7 +35,6 @@ from sugar3.graphics.style import GRID_CELL_SIZE
 
 from astrofractions import AstrofractionsGame
 
-
 class AstrofractionsActivity(activity.Activity):
     """AstrofractionsActivity class as specified in activity.info"""
 
@@ -105,4 +104,4 @@ class AstrofractionsActivity(activity.Activity):
         h = Gdk.Screen.height() - 2 * GRID_CELL_SIZE
         pygame.display.set_mode((w, h),
                                 pygame.RESIZABLE)
-        self.read_file(os.path.join(activity.get_activity_root(), 'data', 'data'))
+        #self.read_file(os.path.join(activity.get_activity_root(), 'data', 'data'))
