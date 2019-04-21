@@ -46,22 +46,24 @@ class AstrofractionsGame:
         self.clock = pygame.time.Clock()
         # Create the name --> instance map for components
         self.box2d_fps = 50
+        self.running = True
 
-    def write_file(self, path):
-        # Saving to journal
-        self.world.add.remove_mouseJoint()
-        additional_data = {
-            'trackinfo': self.trackinfo,
-            'full_pos_list': self.full_pos_list,
-            'tracked_bodies': self.tracked_bodies
-        }
-        self.world.json_save(path, additional_data, serialize=True)
+    #def write_file(self, path):
+    #    # Saving to journal
+    #    self.world.add.remove_mouseJoint()
+    #    additional_data = {
+    #        'trackinfo': self.trackinfo,
+    #        'full_pos_list': self.full_pos_list,
+    #        'tracked_bodies': self.tracked_bodies
+    #    }
+    #    self.world.json_save(path, additional_data, serialize=True)
 
-    def read_file(self, path):
-        # Loading from journal
-        self.opening_queue = path
+    #def read_file(self, path):
+    #    # Loading from journal
+    #    self.opening_queue = path
 
     def run(self):
+        self.screen = pygame.display.get_surface()
         while self.running:
 
             # Pump GTK messages.
@@ -77,24 +79,8 @@ class AstrofractionsGame:
                 elif event.type == pygame.VIDEORESIZE:
                     pygame.display.set_mode(event.size, pygame.RESIZABLE)
 
-                self.currentTool.handleEvents(event)
-
-                if event.type == MOUSEBUTTONUP:
-                    # if event.button == 1:
-                    self.show_fake_cursor = True
-
                 # Update & Draw World
-                self.world.update(fps=self.box2d_fps)
                 self.screen.fill((240, 240, 240))  # #f0f0f0, light-grey
-                self.world.draw()
-
-                # Draw output from tools
-                self.currentTool.draw()
-
-                # Show Sugar like cursor for UI consistancy
-                if self.show_fake_cursor:
-                    self.screen.blit(self.cursor_picture,
-                                     pygame.mouse.get_pos())
 
                 # Flip Display
                 pygame.display.flip()

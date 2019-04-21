@@ -92,6 +92,17 @@ class AstrofractionsActivity(activity.Activity):
         self._notebook.add(self.game.canvas)
 
         self.set_canvas(self.game.canvas)
-        self.canvas.run_pygame(self.game.run)
+	Gdk.Screen.get_default().connect('size-changed', self.__configure_cb)
+        self.canvas = self._notebook
 
         self.show_all()
+
+    def __configure_cb(self, event):
+        ''' Screen size has changed '''
+        self.write_file(os.path.join(
+                        activity.get_activity_root(), 'data', 'data'))
+        w = Gdk.Screen.width()
+        h = Gdk.Screen.height() - 2 * GRID_CELL_SIZE
+        pygame.display.set_mode((w, h),
+                                pygame.RESIZABLE)
+        self.read_file(os.path.join(activity.get_activity_root(), 'data', 'data'))
