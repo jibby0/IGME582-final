@@ -18,6 +18,9 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+import sys
+import sugargame
+
 from gettext import gettext as _
 
 from sugar3.activity import activity
@@ -28,6 +31,7 @@ from sugar3.activity.widgets import StopButton
 from sugar3.activity.widgets import ShareButton
 from sugar3.activity.widgets import DescriptionItem
 
+import colors
 
 class AstrofractionsActivity(activity.Activity):
     """AstrofractionsActivity class as specified in activity.info"""
@@ -75,3 +79,33 @@ class AstrofractionsActivity(activity.Activity):
         label = Gtk.Label(_("Astrofractions!"))
         self.set_canvas(label)
         label.show()
+
+	exit = False
+
+	pygame.init()
+	screen = pygame.display.get_surface()
+	
+	if not(screen):
+		screen = pygame.display.set_mode((pygame.display.Info().current_w, pygame.display.Info().current_h))
+		pygame.display.set_caption(_("Astrofractions"))
+		gameicon = pygame.image.load("activity/asteroid_example.png")
+		pygame.display.set_icon(gameicon)
+
+	asteroid = pygame.image.load("activity/asteroid_example.png")
+	aster_rect = asteroid.get_rect()
+
+	while not exit:
+		while Gtk.events_pending():
+			Gtk.main_iteration()
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				exit = True
+		mouse_x, mouse_y = pygame.mouse.get_pos()
+
+		screen.fill(colors.WHITE)
+		screen.blit(asteroid, aster_rect)
+		pygame.display.update()
+		
+		if exit == True:
+			pygame.quit()
+			sys.exit()	
