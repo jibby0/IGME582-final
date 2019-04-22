@@ -86,11 +86,14 @@ class AstrofractionsGame:
         background = pygame.image.load("activity/space_example.jpg")
         asteroid = pygame.image.load("activity/asteroid_example.png")
 
-        # Place the asteroids at degree values
-        # Asteroids are always a positioned a little less than half the width of the screen from the center
+	# Asteroids are always a distanced a little less than half the width of the screen from the center
         self.asteroid_distance = (self.canvas.get_preferred_width()[1] // 2) * 4 // 5
 	
-        asteroid1 = Asteroid(30, asteroid)
+        # Array of asteroid objects (hard-coded, for now)
+        asteroids = [Asteroid(30, asteroid), Asteroid(90, asteroid), Asteroid(145, asteroid)]
+
+        # Cannon is at the bottom of the screen, in the middle
+        self.cannon_pos = (self.canvas.get_preferred_width()[1] // 2, self.canvas.get_preferred_height()[1])
 
         while self.running:
 
@@ -106,21 +109,28 @@ class AstrofractionsGame:
                     return
                 elif event.type == pygame.VIDEORESIZE:
                     pygame.display.set_mode(event.size, pygame.RESIZABLE)
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # Set the x, y postions of the mouse click
+                    x, y = event.pos
+
+                    # Check all asteroids to see if one of them was clicked on. Break if found
+                    for ast in asteroids:
+                        if ast.is_selected(pygame.mouse.get_pos()):
+                            self.angle_to_guess = ast.angle
+                            break
 
             self.screen.fill(colors.WHITE)
             self.screen.blit(background, (0,0))
-	    
-            asteroid1.set_asteroid_pos(self.get_asteroid_pos(asteroid1.angle))
-            asteroid1.update()
+	   
+            # For all asteroids, update the position to match then angle, draw it to the screen 
+            for ast in asteroids:
+                ast.set_asteroid_pos(self.get_asteroid_pos(ast.angle))
+                ast.update()
+                self.screen.blit(ast.img, ast.rect)
 
-            # EXAMPLE: degrees for astroids at 30,90, and 145 degrees
-            self.screen.blit(asteroid1.img, asteroid1.rect)
-            #self.screen.blit(asteroid, asteroid.get_rect(center=self.get_asteroid_pos(90)))
-            #self.screen.blit(asteroid, asteroid.get_rect(center=self.get_asteroid_pos(145)))
-
-            if pygame.mouse.get_pressed()[0]:
-                if asteroid1.is_selected(pygame.mouse.get_pos()):
-                    self.angle_to_guess = asteroid1.angle
+            # EXAMPLE: draw lines from cannon to asteroid
+            pygame.draw.line(self.screen, colors.GREEN, self.cannon_pos, self.get_asteroid_pos(self.angle_to_guess))
+ 
             pygame.display.update()
 
         return False

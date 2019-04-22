@@ -1,11 +1,7 @@
 #!/usr/bin/python3
 # Astrofractions asteroid class
 
-import os
 import math
-
-from gi.repository import Gtk
-from gi.repository import Gdk
 
 import pygame
 from pygame.locals import MOUSEBUTTONUP
@@ -18,6 +14,8 @@ class Asteroid:
         self.img = asteroidImg
         self.rect = self.img.get_rect(center=self.position)
 
+    # Helper functions to set things and move the asteroids
+
     def set_angle(self, angle):
         self.angle = angle
 
@@ -27,6 +25,7 @@ class Asteroid:
     def update(self):
         self.rect = self.img.get_rect(center=self.position)
 
+    # Checks if a point is in the asteroid
     def is_selected(self,(mouse_x, mouse_y)):
         if self.rect.collidepoint((mouse_x, mouse_y)):
             return True
