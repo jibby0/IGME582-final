@@ -103,6 +103,12 @@ class AstrofractionsGame:
                     return
                 elif event.type == pygame.VIDEORESIZE:
                     pygame.display.set_mode(event.size, pygame.RESIZABLE)
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # Set the x, y postions of the mouse click
+                    x, y = event.pos
+                    # TODO which asteroid did we click on?
+                    #if asteroid.get_rect().collidepoint(x, y):
+                    #    print('clicked on image')
 
             self.screen.fill(colors.WHITE)
 	    self.screen.blit(background, (0,0))
