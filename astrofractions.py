@@ -28,6 +28,7 @@
 # Code:   git://git.sugarlabs.org/physics/mainline.git
 
 import os
+import math
 
 from gi.repository import Gtk
 from gi.repository import Gdk
@@ -42,9 +43,6 @@ class AstrofractionsGame:
 
     def __init__(self, activity):
         self.activity = activity
-        # Get everything set up
-        self.clock = pygame.time.Clock()
-        # Create the name --> instance map for components
         self.box2d_fps = 50
         self.running = True
 
@@ -62,6 +60,18 @@ class AstrofractionsGame:
     #    # Loading from journal
     #    self.opening_queue = path
 
+    def get_asteroid_pos(self, d):
+        '''
+        Calculate the x and y positions for an asteroid that should be at a
+        d degree angle from the laser.
+        '''
+        # Thinking of this like a triangle, calculate the length of the side opposite the laser.
+        distance_from_center = (int) (math.cos(math.radians(d)) * self.asteroid_distance)
+        x = (self.canvas.get_preferred_width()[1] // 2) + distance_from_center
+        height_from_bottom = (int) (math.sin(math.radians(d)) * self.asteroid_distance)
+        y = self.canvas.get_preferred_height()[1] - height_from_bottom
+        return (x,y)
+
     def run(self):
         self.screen = pygame.display.get_surface()
 	if not(self.screen):
@@ -70,8 +80,13 @@ class AstrofractionsGame:
 		gameicon = pygame.image.load("activity/asteroid_example.png")
 		pygame.display.set_icon(gameicon)
 
+	background = pygame.image.load("activity/space_example.jpg")
 	asteroid = pygame.image.load("activity/asteroid_example.png")
-	aster_rect = asteroid.get_rect()
+
+	# Place the asteroids at degree values
+	# Asteroids are always a positioned a little less than half the width of the screen from the center
+        self.asteroid_distance = (self.canvas.get_preferred_width()[1] // 2) * 4 // 5
+
         while self.running:
 
             # Pump GTK messages.
@@ -88,7 +103,13 @@ class AstrofractionsGame:
                     pygame.display.set_mode(event.size, pygame.RESIZABLE)
 
             self.screen.fill(colors.WHITE)
-	    self.screen.blit(asteroid, aster_rect)
+	    self.screen.blit(background, (0,0))
+
+            # EXAMPLE: degrees for astroids at 30,90, and 145 degrees
+	    self.screen.blit(asteroid, asteroid.get_rect(center=self.get_asteroid_pos(30)))
+	    self.screen.blit(asteroid, asteroid.get_rect(center=self.get_asteroid_pos(90)))
+	    self.screen.blit(asteroid, asteroid.get_rect(center=self.get_asteroid_pos(145)))
+
             pygame.display.update()
 
         return False
