@@ -83,9 +83,11 @@ class AstrofractionsGame:
 	background = pygame.image.load("activity/space_example.jpg")
 	asteroid = pygame.image.load("activity/asteroid_example.png")
 
-	# Place the asteroids at degree values
-	# Asteroids are always a positioned a little less than half the width of the screen from the center
+	# Asteroids are always a distanced a little less than half the width of the screen from the center
         self.asteroid_distance = (self.canvas.get_preferred_width()[1] // 2) * 4 // 5
+
+        # Cannon is at the bottom of the screen, in the middle
+        self.cannon_pos = (self.canvas.get_preferred_width()[1] // 2, self.canvas.get_preferred_height()[1])
 
         while self.running:
 
@@ -104,6 +106,9 @@ class AstrofractionsGame:
 
             self.screen.fill(colors.WHITE)
 	    self.screen.blit(background, (0,0))
+
+            # EXAMPLE: draw lines from cannon to asteroid
+            pygame.draw.line(self.screen, colors.GREEN, self.cannon_pos, self.get_asteroid_pos(30))
 
             # EXAMPLE: degrees for astroids at 30,90, and 145 degrees
 	    self.screen.blit(asteroid, asteroid.get_rect(center=self.get_asteroid_pos(30)))
