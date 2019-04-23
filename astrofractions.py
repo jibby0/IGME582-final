@@ -85,6 +85,7 @@ class AstrofractionsGame:
 
         background = pygame.image.load("activity/space_example.jpg")
         asteroid = pygame.image.load("activity/asteroid_example.png")
+        cannon = pygame.image.load("activity/cannon_example.jpg")
 
 	# Asteroids are always a distanced a little less than half the width of the screen from the center
         self.asteroid_distance = (self.canvas.get_preferred_width()[1] // 2) * 4 // 5
@@ -124,12 +125,15 @@ class AstrofractionsGame:
 	   
             # For all asteroids, update the position to match then angle, draw it to the screen 
             for ast in asteroids:
+                pygame.draw.line(self.screen, colors.GREEN, self.cannon_pos, (ast.rect.centerx, ast.rect.centery))
                 ast.set_asteroid_pos(self.get_asteroid_pos(ast.angle))
                 ast.update()
                 self.screen.blit(ast.img, ast.rect)
 
-            # EXAMPLE: draw lines from cannon to asteroid
-            pygame.draw.line(self.screen, colors.GREEN, self.cannon_pos, self.get_asteroid_pos(self.angle_to_guess))
+
+            # EXAMPLE: rotate the cannon towards the 90 degree asteroid
+            cannon_up = pygame.transform.rotate(cannon, 90)
+            self.screen.blit(cannon_up, cannon.get_rect(center=self.cannon_pos))
  
             pygame.display.update()
 
