@@ -1,25 +1,29 @@
-# Copyright 2009 Simon Schampijer
+#!/usr/bin/python3
+# Astrofractions game logic
 #
-# This program is free software; you can redistribute it and/or modify
+# Modified from PhysicsGame of the Physics activity.
+
+# Copyright (C) 2009 Simon Schampijer
+# Copyright (C) 2019  Josh Bicking
+# Copyright (C) 2019  Giovanni Aleman
+# Copyright (C) 2019  Derek Erway
+
+#  This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-#
+
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#
+
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Code:   git://github.com/jibby0/IGME582-final.git
 
 import os
-
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
-from gi.repository import Gdk
 
 import pygame
 import sugargame.canvas
@@ -36,6 +40,12 @@ from sugar3.activity.widgets import DescriptionItem
 from sugar3.graphics.style import GRID_CELL_SIZE
 
 from astrofractions import AstrofractionsGame
+
+from gi.repository import Gtk
+from gi.repository import Gdk
+import gi
+gi.require_version('Gtk', '3.0')
+
 
 class AstrofractionsActivity(activity.Activity):
     """AstrofractionsActivity class as specified in activity.info"""
@@ -93,7 +103,7 @@ class AstrofractionsActivity(activity.Activity):
         self._notebook.add(self.game.canvas)
 
         self.set_canvas(self.game.canvas)
-	Gdk.Screen.get_default().connect('size-changed', self.__configure_cb)
+        Gdk.Screen.get_default().connect('size-changed', self.__configure_cb)
         self.canvas = self._notebook
 
         self.show_all()
@@ -106,4 +116,5 @@ class AstrofractionsActivity(activity.Activity):
         h = Gdk.Screen.height() - 2 * GRID_CELL_SIZE
         pygame.display.set_mode((w, h),
                                 pygame.RESIZABLE)
-        #self.read_file(os.path.join(activity.get_activity_root(), 'data', 'data'))
+        # self.read_file(
+        #     os.path.join(activity.get_activity_root(), 'data', 'data'))
