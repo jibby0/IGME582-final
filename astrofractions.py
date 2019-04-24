@@ -107,11 +107,11 @@ class AstrofractionsGame:
                     (pygame.display.Info().current_w,
                      pygame.display.Info().current_h))
                 pygame.display.set_caption(_("Astrofractions"))
-                gameicon = pygame.image.load("activity/asteroid_example.png")
+                gameicon = pygame.image.load("images/asteroid.png")
                 pygame.display.set_icon(gameicon)
 
         self.background = pygame.image.load("activity/space_example.jpg")
-        self.asteroid = pygame.image.load("activity/asteroid_example.png")
+        self.asteroid = pygame.image.load("images/asteroid.png")
         self.cannon = pygame.image.load("activity/cannon_example.jpg")
         self.bottom_bar = pygame.image.load("activity/bottom_bar_example.jpg")
 
