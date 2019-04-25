@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Astrofractions game logic
+# Astroangles game logic
 #
 # Modified from PhysicsGame of the Physics activity.
 
@@ -39,7 +39,7 @@ from sugar3.activity.widgets import ShareButton
 from sugar3.activity.widgets import DescriptionItem
 from sugar3.graphics.style import GRID_CELL_SIZE
 
-from astrofractions import AstrofractionsGame
+from astroangles import AstroanglesGame
 
 from gi.repository import Gtk
 from gi.repository import Gdk
@@ -47,11 +47,11 @@ import gi
 gi.require_version('Gtk', '3.0')
 
 
-class AstrofractionsActivity(activity.Activity):
-    """AstrofractionsActivity class as specified in activity.info"""
+class AstroanglesActivity(activity.Activity):
+    """AstroanglesActivity class as specified in activity.info"""
 
     def __init__(self, handle):
-        """Set up the Astrofractions activity."""
+        """Set up the Astroangles activity."""
         activity.Activity.__init__(self, handle)
 
         # we do not have collaboration features
@@ -90,7 +90,7 @@ class AstrofractionsActivity(activity.Activity):
         self.set_toolbar_box(toolbar_box)
         toolbar_box.show()
 
-        self.game = AstrofractionsGame(self)
+        self.game = AstroanglesGame(self)
         self.game.canvas = sugargame.canvas.PygameCanvas(
             self, main=self.game.run, modules=[pygame.display, pygame.font])
 

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Astrofractions game logic
+# Astroangles game logic
 #
 # Modified from PhysicsGame of the Physics activity.
 
@@ -39,7 +39,7 @@ import colors
 from asteroid import Asteroid
 
 
-class AstrofractionsGame:
+class AstroanglesGame:
 
     def __init__(self, activity):
         self.activity = activity
@@ -106,7 +106,7 @@ class AstrofractionsGame:
                 self.screen = pygame.display.set_mode(
                     (pygame.display.Info().current_w,
                      pygame.display.Info().current_h))
-                pygame.display.set_caption(_("Astrofractions"))
+                pygame.display.set_caption(_("Astroangles"))
                 gameicon = pygame.image.load("images/asteroid.png")
                 pygame.display.set_icon(gameicon)
 
