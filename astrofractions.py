@@ -85,6 +85,20 @@ class AstrofractionsGame:
         self.asteroids = [Asteroid(correct, self.asteroid),
                           Asteroid(wrong1, self.asteroid),
                           Asteroid(wrong2, self.asteroid)]
+    def reset(self):
+        '''
+        Resets the game
+        '''
+
+        # Checks if the game should be running
+        self.game_running = True
+
+        # Track health of the player. Might change amount later
+        self.player_health = 3
+        
+        # Track correct answers
+        self.correct_answers = 0
+        self.gen_new_problem()
 
     def run(self):
         self.screen = pygame.display.get_surface()
@@ -93,13 +107,11 @@ class AstrofractionsGame:
                     (pygame.display.Info().current_w,
                      pygame.display.Info().current_h))
                 pygame.display.set_caption(_("Astrofractions"))
-                gameicon = pygame.image.load("activity/asteroid_example.png")
+                gameicon = pygame.image.load("images/asteroid.png")
                 pygame.display.set_icon(gameicon)
 
-        self.angle_to_guess = 0
-
         self.background = pygame.image.load("activity/space_example.jpg")
-        self.asteroid = pygame.image.load("activity/asteroid_example.png")
+        self.asteroid = pygame.image.load("images/asteroid.png")
         self.cannon = pygame.image.load("activity/cannon_example.jpg")
         self.bottom_bar = pygame.image.load("activity/bottom_bar_example.jpg")
 
@@ -120,8 +132,7 @@ class AstrofractionsGame:
         pygame.freetype.init()
         GAME_FONT = pygame.freetype.SysFont("DejaVuSans", 32)
 
-        # Track correct answers
-        self.correct_answers = 0
+        self.reset()
 
         while self.running:
 
@@ -138,23 +149,28 @@ class AstrofractionsGame:
                 elif event.type == pygame.VIDEORESIZE:
                     pygame.display.set_mode(event.size, pygame.RESIZABLE)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    # Set the x, y postions of the mouse click
-                    x, y = event.pos
+                    if self.game_running:
+                        # Set the x, y postions of the mouse click
+                        x, y = event.pos
 
-                    # Check all asteroids to see if one of them was clicked on. Break if found
-                    for ast in self.asteroids:
-                        if ast.is_selected(pygame.mouse.get_pos()):
-                            self.angle_to_guess = ast.angle
-
-                            self.cannon_rotated = pygame.transform.rotate(
-                                self.cannon, self.angle_to_guess)
-                            if self.correct_angle == self.angle_to_guess:
-                                self.correct_answers += 1
-                            else:
-                                # TODO wrong answer event
-                                pass
-                            self.gen_new_problem()
-                            break
+                        # Check all asteroids to see if one of them was clicked on. Break if found
+                        for ast in self.asteroids:
+                            if ast.is_selected(pygame.mouse.get_pos()):
+                                self.cannon_rotated = pygame.transform.rotate(
+                                    self.cannon, ast.angle)
+                                if self.correct_angle == ast.angle:
+                                    self.correct_answers += 1
+                                else:
+                                    self.player_health -= 1
+                                    
+                                    if self.player_health <= 0:
+                                        self.game_running = False
+                                
+                                if self.player_health > 0:
+                                    self.gen_new_problem()
+                                break
+                    else:
+                        self.reset()
 
             self.screen.fill(colors.WHITE)
             self.screen.blit(self.background, (0, 0))
@@ -181,18 +197,47 @@ class AstrofractionsGame:
                 self.bottom_bar.get_rect(
                     topleft=(0, self.canvas.get_preferred_height()[1])))
 
+            degrees_text = '{} degrees'.format(self.correct_angle)
+            correct_text = 'Correct: {}'.format(self.correct_answers)
+
             GAME_FONT.render_to(
                 self.screen,
-                (self.canvas.get_preferred_width()[1] // 2,
+                (self.canvas.get_preferred_width()[1] // 2 - GAME_FONT.get_rect(degrees_text).width // 2,
                  self.canvas.get_preferred_height()[1]),
-                '{} degrees'.format(self.correct_angle),
+                degrees_text,
                 fgcolor=colors.WHITE, bgcolor=colors.BLACK)
 
             GAME_FONT.render_to(
                 self.screen,
                 (0, self.canvas.get_preferred_height()[1]),
-                'Correct: {}'.format(self.correct_answers),
+                'Health: {}'.format(self.player_health),
                 fgcolor=colors.WHITE, bgcolor=colors.BLACK)
+
+            GAME_FONT.render_to(
+                self.screen,
+                (self.canvas.get_preferred_width()[1] - GAME_FONT.get_rect(correct_text).width,
+                 self.canvas.get_preferred_height()[1]),
+                correct_text,
+                fgcolor=colors.WHITE, bgcolor=colors.BLACK) 
+
+            if not self.game_running:
+                gameover_text = "Game Over!"
+                restart_text = "Click to Restart"
+
+                GAME_FONT.render_to(
+                    self.screen,
+                    (self.canvas.get_preferred_width()[1] // 2 - GAME_FONT.get_rect(gameover_text).width // 2,
+                     self.canvas.get_preferred_height()[1] // 2 - 25),
+                gameover_text,
+                fgcolor=colors.WHITE, bgcolor=colors.BLACK)
+
+                GAME_FONT.render_to(
+                    self.screen,
+                    (self.canvas.get_preferred_width()[1] // 2 - GAME_FONT.get_rect(restart_text).width // 2,
+                     self.canvas.get_preferred_height()[1] // 2 + 25),
+                restart_text,
+                fgcolor=colors.WHITE, bgcolor=colors.BLACK)
+
             pygame.display.update()
 
         return False
