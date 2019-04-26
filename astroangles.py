@@ -112,7 +112,7 @@ class AstroanglesGame:
 
         self.background = pygame.image.load("activity/space_example.jpg")
         self.asteroid = pygame.image.load("images/asteroid.png")
-        self.cannon = pygame.image.load("activity/cannon_example.jpg")
+        self.cannon = pygame.image.load("images/spaceship.png")
         self.bottom_bar = pygame.image.load("activity/bottom_bar_example.jpg")
 
         # Asteroids are always a distanced a little less than half the width of
