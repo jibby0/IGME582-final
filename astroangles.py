@@ -109,12 +109,11 @@ class AstroanglesGame:
                 pygame.display.set_caption(_("Astroangles"))
                 gameicon = pygame.image.load("images/asteroid.png")
                 pygame.display.set_icon(gameicon)
-
         self.background = pygame.image.load("activity/space_example.jpg")
         self.asteroid = pygame.image.load("images/asteroid.png")
-        self.asteroid = pygame.transform.scale(self.asteroid, (250, 250))
+        self.asteroid = pygame.transform.scale(self.asteroid, (int(round(pygame.display.Info().current_w // 3.2)), int(round(pygame.display.Info().current_h // 2.4))))
         self.cannon = pygame.image.load("images/spaceship.png")
-        self.cannon = pygame.transform.scale(self.cannon, (100, 100))
+        self.cannon = pygame.transform.scale(self.cannon, (pygame.display.Info().current_w // 8, pygame.display.Info().current_h // 6))
         self.bottom_bar = pygame.image.load("activity/bottom_bar_example.jpg")
 
         # Asteroids are always a distanced a little less than half the width of
