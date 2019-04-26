@@ -1,8 +1,8 @@
 [Activity]
-name = Astrofractions
+name = Astroangles
 activity_version = 1
-bundle_id = org.sugarlabs.Astrofractions
-exec = sugar-activity activity.AstrofractionsActivity
-icon = activity-astrofractions
+bundle_id = org.sugarlabs.Astroangles
+exec = sugar-activity activity.AstroanglesActivity
+icon = activity-astroangles
 license = GPLv2+
 repository = https://github.com/jibby0/IGME582-final.git
