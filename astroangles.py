@@ -109,10 +109,11 @@ class AstroanglesGame:
                 pygame.display.set_caption(_("Astroangles"))
                 gameicon = pygame.image.load("images/asteroid.png")
                 pygame.display.set_icon(gameicon)
-
         self.background = pygame.image.load("activity/space_example.jpg")
         self.asteroid = pygame.image.load("images/asteroid.png")
+        self.asteroid = pygame.transform.scale(self.asteroid, (int(round(pygame.display.Info().current_w // 3.2)), int(round(pygame.display.Info().current_h // 2.4))))
         self.cannon = pygame.image.load("images/spaceship.png")
+        self.cannon = pygame.transform.scale(self.cannon, (pygame.display.Info().current_w // 8, pygame.display.Info().current_h // 6))
         self.bottom_bar = pygame.image.load("activity/bottom_bar_example.jpg")
 
         # Asteroids are always a distanced a little less than half the width of
@@ -121,7 +122,7 @@ class AstroanglesGame:
 
         # Cannon is at the bottom of the screen, in the middle
         self.cannon_pos = (self.canvas.get_preferred_width()[1] // 2,
-                           self.canvas.get_preferred_height()[1])
+                           self.canvas.get_preferred_height()[1] - self.cannon.get_rect().height)
         # And starts straight up
         self.cannon_rotated = pygame.transform.rotate(self.cannon, 90)
 
@@ -157,7 +158,7 @@ class AstroanglesGame:
                         for ast in self.asteroids:
                             if ast.is_selected(pygame.mouse.get_pos()):
                                 self.cannon_rotated = pygame.transform.rotate(
-                                    self.cannon, ast.angle)
+                                    self.cannon, ast.angle - 90)
                                 if self.correct_angle == ast.angle:
                                     self.correct_answers += 1
                                 else:
