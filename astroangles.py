@@ -175,6 +175,25 @@ class AstroanglesGame:
             self.screen.fill(colors.WHITE)
             self.screen.blit(self.background, (0, 0))
 
+            # Draw a base line, indicating 0 degrees and 180 degrees
+            pygame.draw.line(
+                self.screen,
+                colors.RED,
+                (0, self.cannon_pos[1]),
+                (self.canvas.get_preferred_width()[1], self.cannon_pos[1]))
+
+            # Label 0 and 180 degrees
+            GAME_FONT.render_to(
+                self.screen,
+                (0, self.cannon_pos[1]),
+                '180 degrees',
+                fgcolor=colors.WHITE, bgcolor=colors.BLACK)
+            GAME_FONT.render_to(
+                self.screen,
+                (self.canvas.get_preferred_width()[1]- 155, self.cannon_pos[1]),
+                '0 degrees',
+                fgcolor=colors.WHITE, bgcolor=colors.BLACK)
+
             # For all asteroids, update the position to match then angle, draw
             # it to the screen
             for ast in self.asteroids:
