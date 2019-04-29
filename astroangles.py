@@ -188,12 +188,12 @@ class AstroanglesGame:
                 self.screen,
                 (0, self.cannon_pos[1]),
                 '180 degrees',
-                fgcolor=colors.WHITE, bgcolor=colors.BLACK)
+                fgcolor=colors.WHITE)
             GAME_FONT.render_to(
                 self.screen,
                 (self.canvas.get_preferred_width()[1]- 155, self.cannon_pos[1]),
                 '0 degrees',
-                fgcolor=colors.WHITE, bgcolor=colors.BLACK)
+                fgcolor=colors.WHITE)
 
             # For all asteroids, update the position to match then angle, draw
             # it to the screen
@@ -249,14 +249,14 @@ class AstroanglesGame:
                     (self.canvas.get_preferred_width()[1] // 2 - GAME_FONT.get_rect(gameover_text).width // 2,
                      self.canvas.get_preferred_height()[1] // 2 - 25),
                 gameover_text,
-                fgcolor=colors.WHITE, bgcolor=colors.BLACK)
+                fgcolor=colors.WHITE)
 
                 GAME_FONT.render_to(
                     self.screen,
                     (self.canvas.get_preferred_width()[1] // 2 - GAME_FONT.get_rect(restart_text).width // 2,
                      self.canvas.get_preferred_height()[1] // 2 + 25),
                 restart_text,
-                fgcolor=colors.WHITE, bgcolor=colors.BLACK)
+                fgcolor=colors.WHITE)
 
             pygame.display.update()
 
