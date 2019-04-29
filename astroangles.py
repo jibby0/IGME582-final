@@ -109,7 +109,7 @@ class AstroanglesGame:
                 pygame.display.set_caption(_("Astroangles"))
                 gameicon = pygame.image.load("images/asteroid.png")
                 pygame.display.set_icon(gameicon)
-        self.background = pygame.image.load("activity/space_example.jpg")
+        self.background = pygame.image.load("images/stary_sky.jpeg")
         self.asteroid = pygame.image.load("images/asteroid.png")
         self.asteroid = pygame.transform.scale(self.asteroid, (int(round(pygame.display.Info().current_w // 3.2)), int(round(pygame.display.Info().current_h // 2.4))))
         self.cannon = pygame.image.load("images/spaceship.png")
@@ -124,7 +124,7 @@ class AstroanglesGame:
         self.cannon_pos = (self.canvas.get_preferred_width()[1] // 2,
                            self.canvas.get_preferred_height()[1] - self.cannon.get_rect().height)
         # And starts straight up
-        self.cannon_rotated = pygame.transform.rotate(self.cannon, 90)
+        self.cannon_rotated = pygame.transform.rotate(self.cannon, 0)
 
         # Set up a new problem upon start
         self.gen_new_problem()
